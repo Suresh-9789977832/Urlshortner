@@ -1,0 +1,145 @@
+.url{
+    background-color: #263849;
+   width: 100%;
+   height: 100%;
+   min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 0;
+    overflow: hidden;
+    position: fixed;
+}
+::-webkit-scrollbar{
+    display: none;
+}
+.url_top>h1{
+    font-weight: 600 !important;
+    font-size:45px;
+    color: white;
+    padding-bottom: 15px;
+}
+.url_top>p{
+    display: flex;
+    color: rgb(253, 238, 238);
+    justify-content: center;
+    padding-bottom: 25px;
+}
+.url_input>input{
+    border: none;
+    outline: none;
+    width: 480px;
+    font-size: 17px;
+    padding-left: 10px;
+    height: 48px;
+    border-radius:5px;
+    margin-right: 10px;
+}
+.url_input{
+    padding-bottom: 20px;
+
+}
+.url_input>Button{
+    height: 48px !important;
+    width: 170px;
+}
+
+
+.shorturl_main{
+overflow-y: scroll;
+}
+
+a{
+    text-decoration: none;
+
+}
+
+@media  (max-width:455px){
+    .url_top>h1{
+        font-weight: 500 !important;
+        font-size:38px;
+    }
+    
+.url_top>p{
+    font-size: 15px;
+}
+
+.url_input>input{
+   
+    width: 300px;
+    font-size: 12px;
+    padding-left: 10px;
+    height: 35px;
+    border-radius:5px;
+    margin-right: 10px;
+}
+
+.url_input>Button{
+    height:33px !important;
+    width: 90px;
+    font-size: 10px;
+}
+}
+
+
+
+@media  (max-width:385px){
+    .url_top>h1{
+        font-size:35px;
+    }
+    
+.url_top>p{
+    font-size: 13px;
+}
+.url_input{
+    padding-bottom: 10px;
+
+}
+
+.url_input>input{
+   
+    width: 250px;
+    font-size: 12px;
+    padding-left: 10px;
+    height: 35px;
+    border-radius:5px;
+    margin-right: 10px;
+}
+
+.url_input>Button{
+    height:33px !important;
+    width: 90px;
+    font-size: 10px;
+}
+}
+
+
+@media  (max-width:330px){
+    .url_top>h1{
+        font-size:30px;
+    }
+    
+.url_top>p{
+    font-size: 12px;
+}
+.url_input{
+    padding-bottom: 10px;
+
+}
+
+.url_input>input{
+   
+    width: 225px;
+    font-size: 12px;
+    padding-left: 10px;
+    height: 29px;
+    border-radius:5px;
+    margin-right: 10px;
+}
+
+.url_input>Button{
+    height:29px !important;
+    width: 60px;
+    font-size: 8px;
+}
+}
