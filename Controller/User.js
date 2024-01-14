@@ -45,7 +45,7 @@ const signup = async (req,res) => {
                 from: 'sanddysuresh@gmail.com',
                 to: `${email}`,
                 subject: 'Reset your password',
-                text: `http://localhost:3000/user/activate/${token}`
+                text: `https://eclectic-donut-19ba94.netlify.app/user/activate/${token}`
               };
               
               transporter.sendMail(mailOptions, function(error, info){
@@ -188,7 +188,7 @@ const forgotpassword = async (req, res) => {
                         from: 'sanddysuresh@gmail.com',
                         to: `${email}`,
                         subject: 'Reset your password',
-                        text:`http://localhost:3000/getresetpassword/${token}/${id}`
+                        text:`https://eclectic-donut-19ba94.netlify.app/getresetpassword/${token}/${id}`
                     };
                     
                     transporter.sendMail(mailOptions, function(error, info){
