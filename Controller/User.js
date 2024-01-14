@@ -188,7 +188,7 @@ const forgotpassword = async (req, res) => {
                         from: 'sanddysuresh@gmail.com',
                         to: `${email}`,
                         subject: 'Reset your password',
-                        text:`https://urlshort-ocx8.onrender.com/getresetpassword/${token}/${id}`
+                        text:`https://urlshort-ocx8.onrender.com/user/getresetpassword/${token}/${id}`
                     };
                     
                     transporter.sendMail(mailOptions, function(error, info){
