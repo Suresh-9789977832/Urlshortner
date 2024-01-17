@@ -22,6 +22,13 @@ const userschema =new mongoose.Schema({
         type: String,
         required: true,
         default:"Inactive"
+    },
+    resetToken: {
+        type:String
+    },
+    verified: {
+        type: Boolean,
+        default:false
     }
     
 })

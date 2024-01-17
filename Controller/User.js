@@ -171,77 +171,86 @@ const login = async (req, res) => {
 }
 
 const forgotpassword = async (req, res) => {
+    try {
+
     const email = req.body.email
 
     const user = await usermodal.findOne({ email: email })
-    try {
-        if (email) {
-            if (user) {
-                const token = await auth.createtoken({ name: user.name, email: user.email ,id:user._id})
-                const id = user._id
-                var transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                      user: 'sanddysuresh@gmail.com',
-                      pass: 'ydbo imta ewqu ceku'
-                    }
-                  });
-                  
-                  var mailOptions = {
-                        from: 'sanddysuresh@gmail.com',
-                        to: `${email}`,
-                        subject: 'Reset your password',
-                        text:`https://eclectic-donut-19ba94.netlify.app/getresetpassword/${token}/${id}`
-                    };
-                    
-                    transporter.sendMail(mailOptions, function(error, info){
-                        if (error) {    
-                      console.log(error);
-                    } else {
-                        return res.send({
-                            message: "Mail send successfully please check your mail",
-                            token,
-                            id
-                     })
-                    }
-                  });
-            }   
-            else {
-                res.status(400).send({
-                    message:"Enter your registred email id"
-                })
-            }
-        }
-        else {
+        
+        if (!user) {
             res.status(400).send({
-                message:"Enter your email id"
-            })
+                 message:"please enter valid email "
+             })
         }
-    
-     
-    } catch (error) {
-        res.status(500).send({
-            message: "Internal server error",
-            errormessage:error.message
-        })
-    }
+
+    const randomString =
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
+        const link=`https://eclectic-donut-19ba94.netlify.app/reset/${randomString}`
+        
+        user.resetToken=randomString
+
+        await usermodal.findByIdAndUpdate(user.id, user)
+        
+        
+          const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: 'sanddysuresh@gmail.com',
+                pass: 'ydbo imta ewqu ceku'
+            },
+          });
+      
+          const sendMail = async () => {
+            const info = await transporter.sendMail({
+              from: `"sanddysuresh@gmail.com" <${'sanddysuresh@gmail.com'}>`,
+              to: matchedStudent.email,
+              subject: "Reset Password",
+              text: link,
+            });
+          };
+      
+          sendMail()
+            .then(() => {
+              return res
+                .status(201)
+                .json({ message: `Mail has been send to ${matchedStudent.email}` });
+            })
+            .catch((err) => res.status(500).json(err));
+      
+          //
+        } catch (error) {
+          return res
+            .status(400)
+            .json({ message: "Error on updating please try again later" });
+        }
+      
 }
 
-const get_resetpassword = async (req, res) => {
+const confirm_user = async (req, res) => {
 
     try {
-        const {token } = req.params
-        const verifytoken = await jwt.verify(token, process.env.SECRET)
-        if (!verifytoken) {
-                res.status(400).send({
+        const resetToken = req.params.id
+        // const verifytoken = await jwt.verify(token, process.env.SECRET)
+        const match=await usermodal.findOne({resetToken})
+        if (match === null || match.resetToken === "")
+        {
+            return  res.status(400).send({
                 message:"user not exists"
             })
+               
         }
-        else {
-            res.status(200).send({
-                message:"valid user"
-            })
-        }
+        match.verified = true,
+        
+        match.resetToken = ""
+        
+        await usermodal.findByIdAndUpdate(match.id, match)
+        
+        res.status(201).send({
+            message:`${match.firstname} account has been verified`
+        })
+        
+
     
     } catch (error) {
         res.status(500).send({
@@ -296,7 +305,7 @@ module.exports = {
     signup,
     activate,
     login,
-    get_resetpassword,
+    confirm_user,
     forgotpassword,
     resetpassword
 }
