@@ -15,7 +15,6 @@ function Activate() {
             let token=params.token
             let res = await axios.patch(`${Url.API_URL}/activate/${token}`)
             if (res.status == 200)
-                console.log
                 window.location.replace('http://localhost:3000/login')
                 toast.success("Your account is activated")
         } catch (error) {
