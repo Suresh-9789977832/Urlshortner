@@ -4,13 +4,13 @@ const router = express.Router()
 
 router.post('/signup', signup)
 
-router.get('/activate/:token', activate)
+router.patch('/activate/:token', activate)
 
 router.post('/login', login)
 
 router.post('/forgotpassword', forgotpassword)
 
-router.get('/getresetpassword/:token/:id', get_resetpassword)
+router.patch('/getresetpassword/:token/:id', get_resetpassword)
 
 router.post('/reset/:token/:id', resetpassword)
 

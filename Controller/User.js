@@ -12,10 +12,8 @@ const signup = async (req,res) => {
 
     try {
 
-        let firstname =(req.body.firstname) 
-        let lastname = (req.body.lastname)
-        let  password = (req.body.password)
-        let email = (req.body.email)
+
+        const {firstname,lastname,password,email}=req.body
 
         password=await auth.hashedpassword(password)
 
