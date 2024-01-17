@@ -28,6 +28,7 @@ function Forgot() {
       if (error.response.status == 400) { 
         setloader(false)
         toast.error(error.response.data.message)
+        console.log(error)
       }
     }
     
