@@ -6,26 +6,28 @@ import toast from 'react-hot-toast'
 import axios from 'axios'
 
 
-function Validateresetpass() {
+function Confirmuser() {
 
     const navigate=useNavigate()
-    const params=useParams()
+    const params = useParams()
+    
+    
     const activate = async () => {
         try {
-            let token = params.token
-            let id=params.id
-            let res = await axios.get(`${Url.API_URL}/getresetpassword/${token}/${id}`)
-            if (res.status == 200)
-                window.location.replace(`http://localhost:3000/reset/${token}/${id}`)
+            let token=params.id
+             await axios.patch(`${Url.API_URL}/confirmuser/${token}`)
+            toast.success("Account confirmed Successfully")
+            setTimeout(() => {
+                navigate('/')
+            },2000)
         } catch (error) {
-            if (error.response.status == 500) {
-                toast.error("Invalid link try again")
-                navigate('/')
-            }
-            if (error.response.status == 400) {
+            if (error.response.data.message) {
                 toast.error(error.response.data.message)
-                navigate('/')
             }
+            else {
+                console.log(error)
+            }
+
             
         }
     }
@@ -41,4 +43,4 @@ function Validateresetpass() {
   )
 }
 
-export default Validateresetpass
+export default Confirmuser

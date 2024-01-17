@@ -7,6 +7,7 @@ import Activate from "./activate/Activate";
 import Validateresetpass from "./activate/Validateresetpass";
 import Reset from "./Pages/reset/Reset";
 import Urlshortner from "./Component/urlshortner/Urlshortner";
+import Confirmuser from "./activate/Validateresetpass";
 
 function App() {
   return <>
@@ -16,10 +17,10 @@ function App() {
         <Route path="/" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot" element={<Forgot />} />
-        <Route path="/reset/:token/:id" element={<Reset/>} />
+        <Route path="/reset/:id" element={<Reset/>} />
         <Route path="/activate/:token" element={<Activate />} />
         <Route path="/urlshortner" element={<Urlshortner />} />
-        <Route path="/getresetpassword/:token/:id" element={<Validateresetpass />} />
+        <Route path="/confirm/:id" element={<Confirmuser/>} />
         <Route path="*" element={<Signup/>} />
       </Routes>
       
