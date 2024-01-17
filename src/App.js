@@ -17,7 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/reset/:token/:id" element={<Reset/>} />
-        <Route path="/user/activate/:token" element={<Activate />} />
+        <Route path="/activate/:token" element={<Activate />} />
         <Route path="/urlshortner" element={<Urlshortner />} />
         <Route path="/getresetpassword/:token/:id" element={<Validateresetpass/>} />
       </Routes>
