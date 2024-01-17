@@ -204,7 +204,7 @@ const forgotpassword = async (req, res) => {
           const sendMail = async () => {
             const info = await transporter.sendMail({
               from: `"sanddysuresh@gmail.com" <${'sanddysuresh@gmail.com'}>`,
-              to: matchedStudent.email,
+              to: user.email,
               subject: "Reset Password",
               text: link,
             });
@@ -214,15 +214,20 @@ const forgotpassword = async (req, res) => {
             .then(() => {
               return res
                 .status(201)
-                .json({ message: `Mail has been send to ${matchedStudent.email}` });
+                .json({ message: `Mail has been send to ${user.email}` });
             })
-            .catch((err) => res.status(500).json(err));
+            .catch((err) => res.status(500).json(err.message));
       
           //
-        } catch (error) {
-          return res
-            .status(400)
-            .json({ message: "Error on updating please try again later" });
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            message: "Internal server error",
+            errormessage:error.message
+        })
+        //   return res
+        //     .status(400)
+        //     .json({ message: "Error on updating please try again later" });
         }
       
 }
