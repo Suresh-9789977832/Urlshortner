@@ -19,7 +19,8 @@ function App() {
         <Route path="/reset/:token/:id" element={<Reset/>} />
         <Route path="/activate/:token" element={<Activate />} />
         <Route path="/urlshortner" element={<Urlshortner />} />
-        <Route path="/getresetpassword/:token/:id" element={<Validateresetpass/>} />
+        <Route path="/getresetpassword/:token/:id" element={<Validateresetpass />} />
+        <Route path="*" element={<Signup/>} />
       </Routes>
       
     </div>
