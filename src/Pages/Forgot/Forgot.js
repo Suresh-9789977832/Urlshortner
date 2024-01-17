@@ -20,6 +20,7 @@ function Forgot() {
       setloader(true)
       setemail("")
       const res = await axios.put(`${Url.API_URL}/forgotpassword`, { email })
+      console.log(res)
     if (res.status === 201) {
       setloader(false)
       toast.success('Link send your mail')
