@@ -43,7 +43,7 @@ const signup = async (req,res) => {
                 from: 'sanddysuresh@gmail.com',
                 to: `${email}`,
                 subject: 'Reset your password',
-                text: `https://eclectic-donut-19ba94.netlify.app/user/activate/${token}`
+                text: `https://eclectic-donut-19ba94.netlify.app/activate/${token}`
               };
               
               transporter.sendMail(mailOptions, function(error, info){
