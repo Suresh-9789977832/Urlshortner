@@ -24,6 +24,7 @@ function Forgot() {
     if (res.status === 201) {
       setloader(false)
       toast.success('Link send your mail')
+      navigate('/login')
     }
     } catch (error) {
       if (error.response.status == 400) { 

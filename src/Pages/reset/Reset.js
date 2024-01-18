@@ -25,7 +25,7 @@ function Reset() {
             console.log(id,token)
             setloader(true)
             setpassword("")
-        const res = await axios.post(`${Url.API_URL}/reset/${token}/${id}`, { password })
+        const res = await axios.patch(`${Url.API_URL}/reset/${id}/${token}`, { password })
       if (res.status === 200) {
         setloader(false)
           toast.success(res.data.message)

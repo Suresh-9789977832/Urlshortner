@@ -13,11 +13,13 @@ function Confirmuser() {
     
     const activate = async () => {
         try {
-            let token=params.id
-             await axios.patch(`${Url.API_URL}/confirmuser/${token}`)
+            let id = params.id
+            let token = params.token
+
+             await axios.patch(`${Url.API_URL}/confirmuser/${id}/${token}`)
             toast.success("Account confirmed Successfully")
             setTimeout(() => {
-                navigate(`/reset/${token}`)
+                navigate(`/reset/${id}/${token}`)
             }, 2000)
             console.log('reset')
         } catch (error) {

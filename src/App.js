@@ -17,10 +17,10 @@ function App() {
         <Route path="/" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot" element={<Forgot />} />
-        <Route path="/reset/:id" element={<Reset/>} />
+        <Route path="/reset/:id/:token" element={<Reset/>} />
         <Route path="/activate/:token" element={<Activate />} />
         <Route path="/urlshortner" element={<Urlshortner />} />
-        <Route path="/confirm/:id" element={<Confirmuser/>} />
+        <Route path="/confirm/:id/:token" element={<Confirmuser/>} />
         <Route path="*" element={<Signup/>} />
       </Routes>
       
