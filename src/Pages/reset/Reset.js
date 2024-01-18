@@ -26,7 +26,7 @@ function Reset() {
             setloader(true)
             setpassword("")
         const res = await axios.patch(`${Url.API_URL}/reset/${id}/${token}`, { password })
-      if (res.status === 200) {
+      if (res.status === 201) {
         setloader(false)
           toast.success(res.data.message)
           navigate('/login')
