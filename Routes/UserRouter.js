@@ -10,9 +10,9 @@ router.post('/login', login)
 
 router.put('/forgotpassword', forgotpassword)
 
-router.patch('/confirmuser/:id', confirm_user)
+router.patch('/confirmuser/:id/:token', confirm_user)
 
-router.post('/reset/:token/:id', resetpassword)
+router.patch('/reset/:id/:token', resetpassword)
 
 
 

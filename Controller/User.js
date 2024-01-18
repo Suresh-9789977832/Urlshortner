@@ -2,6 +2,7 @@ const usermodal = require("../Modal/Usermodal")
 const auth = require("../Common/auth")
 const nodemailer = require("nodemailer")
 const jwt = require("jsonwebtoken")
+const bcrypt=require("bcrypt")
 
 
 const { default: ShortUniqueId } = require("short-unique-id")
@@ -75,8 +76,6 @@ const signup = async (req,res) => {
 
 }
 
-
-
 const activate = async (req, res) => {
 
     try {
@@ -108,7 +107,6 @@ const activate = async (req, res) => {
         })
     }
 }
-
 
 const login = async (req, res) => {
    
@@ -186,7 +184,7 @@ const forgotpassword = async (req, res) => {
     const randomString =
       Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
-        const link=`https://eclectic-donut-19ba94.netlify.app/reset/${randomString}`
+        const link=`https://eclectic-donut-19ba94.netlify.app/reset/${randomString}/${user._id}`
         
         user.resetToken=randomString
 
@@ -235,69 +233,68 @@ const forgotpassword = async (req, res) => {
 const confirm_user = async (req, res) => {
 
     try {
-        const resetToken = req.params.id
-        // const verifytoken = await jwt.verify(token, process.env.SECRET)
-        const match=await usermodal.findOne({resetToken})
-        if (match === null || match.resetToken === "")
-        {
-            return  res.status(400).send({
-                message:"user not exists"
-            })
-               
+        const resetToken = req.params.token;
+        console.log(resetToken)
+        const user = await usermodal.findOne({_id:resetToken});
+        console.log(user)
+        //if student not found throw error
+        if (!user) {
+          return res
+            .status(400)
+            .json({ message: "student not exists or link expired" });
         }
-        match.verified = true,
-        
-        match.resetToken = ""
-        
-        await usermodal.findByIdAndUpdate(match.id, match)
-        
-        res.status(201).send({
-            message:`${match.firstname} account has been verified`
-        })
-        
-
     
-    } catch (error) {
-        res.status(500).send({
-            message: "Internal server error",
-            errormessage:error.message
-        })
-    }
+        //confirming and updating account
+        user.verified = true;
+    
+        user.resetToken = "";
+    
+        await usermodal.findByIdAndUpdate(user.id, user);
+    
+        res.status(201).json({
+          message: `${user.firstname} account has been verified successfully`,
+        });
+        //
+      } catch (error) {
+        return res
+          .status(400)
+          .json({ message: "student not exists or link expired" });
+      }
+    
 
 }
 
-
 const resetpassword = async (req, res) => {
     try {
-        const {id} = req.params
-        const password = req.body.password
-
-        if (password) {
-            const newpassword = await auth.hashedpassword(password)
-
-            if (newpassword) {
-                let data = await usermodal.findOne({_id:id})
-                 data.password=newpassword
-                data.save()
-                res.status(200).send({
-                    message:"new password updated"
-                })
-            }
-    
-        }
-        else {
-            res.status(400).send({
-                message: "Please enter your password"
-            })
-        }
-
+        const resetToken = req.params.token;
+        const password=req.body.password
+        const user = await usermodal.findOne({ _id: resetToken });
         
-    } catch (error) {
-        res.status(500).send({
-            message: "Internal server error",
-            errormessage:error.message
-        })
-    }
+        //if student not found throw error
+        if (!user) {
+           res
+            .status(400)
+            .json({ message: "student not exists or link expired" });
+        }
+        console.log(user)
+        // hasing the new password and update
+        const hashedPassword = await bcrypt.hash(password, 10);
+    
+        user.password = hashedPassword;
+    
+        await usermodal.findByIdAndUpdate(user.id, user);
+    
+        //sending response
+    
+        res.status(201).json({
+          message: `${user.firstname} password has been updated successfully`,
+        });
+        //
+      } catch (error) {
+        return res
+          .status(500)
+          .json({ errormessage: error.message });
+      }
 }
 
 

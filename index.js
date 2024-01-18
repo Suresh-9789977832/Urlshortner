@@ -15,13 +15,6 @@ app.use('/user',urlrouter)
 
 
 
-app.get('/', (req, res) => {
-    res.send({
-        message:"Welcome to node js"
-    })
-})
-
-
 
 app.listen(8000, () => console.log(`app is running in ${PORT}`))
 
